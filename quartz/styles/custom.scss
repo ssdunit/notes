@@ -1,3 +1,269 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+/* ==========================================================
+   Notes site theme, matched to ssdunit.github.io
+   ========================================================== */
+
+/* ---------- Tokens ---------- */
+
+:root {
+  --nt-radius: 10px;
+  --nt-radius-sm: 6px;
+  --nt-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --nt-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --nt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[saved-theme="dark"] {
+  --light: #121417 !important;
+  --lightgray: #2a2b31 !important;
+  --gray: #aca8ad !important;
+  --darkgray: #c7bdba !important;
+  --dark: #f2ebe7 !important;
+  --secondary: #d99b7f !important;
+  --tertiary: #e5b5a0 !important;
+  --highlight: transparent !important;
+  --nt-panel: #1b1c21;
+}
+
+:root[saved-theme="light"] {
+  --light: #f3efe5 !important;
+  --lightgray: #d9d1c1 !important;
+  --gray: #85867d !important;
+  --darkgray: #5f625b !important;
+  --dark: #171814 !important;
+  --secondary: #b85d32 !important;
+  --tertiary: #8f4524 !important;
+  --highlight: transparent !important;
+  --nt-panel: #f9f6f2;
+}
+
+/* ---------- Base ---------- */
+
+html,
+body {
+  background-color: var(--light);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One font for all text, so regular/bold/italic always match */
+body,
+article,
+.sidebar {
+  font-family: var(--nt-sans);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--secondary) 30%, transparent);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dark);
+  letter-spacing: -0.02em;
+}
+
+/* Site title: serif + accent, like the name on the portfolio */
+.page-title,
+.page-title a {
+  font-family: var(--nt-serif);
+  color: var(--secondary);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Links ---------- */
+
+a {
+  color: var(--secondary);
+  transition: color 0.2s var(--nt-ease);
+}
+
+a:hover {
+  color: var(--tertiary);
+}
+
+article a.internal {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+article a.internal:hover {
+  text-decoration-color: var(--tertiary);
+}
+
+.sidebar a.internal,
+.breadcrumb-container a.internal,
+.backlinks a.internal,
+footer a.internal,
+.page-header a.internal {
+  background-color: transparent;
+  padding: 0;
+  text-decoration: none;
+}
+
+/* ---------- Tags ---------- */
+
+a.tag-link,
+.tags a {
+  background-color: transparent;
+  color: var(--secondary);
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  padding: 0.05rem 0.6rem;
+  font-family: var(--codeFont);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition:
+    border-color 0.2s var(--nt-ease),
+    color 0.2s var(--nt-ease);
+}
+
+a.tag-link:hover,
+.tags a:hover {
+  border-color: var(--secondary);
+  color: var(--tertiary);
+}
+
+.text-highlight {
+  background-color: color-mix(in srgb, var(--secondary) 22%, transparent);
+  border-radius: 3px;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar.left {
+  border-right: 1px solid var(--lightgray);
+}
+
+.sidebar.right {
+  border-left: 1px solid var(--lightgray);
+}
+
+.search .search-button {
+  background-color: var(--nt-panel);
+  border: 1px solid var(--lightgray);
+  border-radius: var(--nt-radius);
+  transition: border-color 0.2s var(--nt-ease);
+}
+
+.search .search-button:hover {
+  border-color: var(--secondary);
+}
+
+.explorer a:hover,
+.explorer a.active {
+  color: var(--secondary);
+}
+
+/* ---------- Content blocks ---------- */
+
+pre {
+  background-color: var(--nt-panel);
+  border: 1px solid var(--lightgray);
+  border-radius: var(--nt-radius);
+}
+
+code {
+  border-radius: var(--nt-radius-sm);
+}
+
+blockquote {
+  border-left: 3px solid var(--secondary);
+  border-radius: 0 var(--nt-radius-sm) var(--nt-radius-sm) 0;
+}
+
+.callout {
+  border-radius: var(--nt-radius);
+}
+
+article img {
+  border-radius: var(--nt-radius);
+}
+
+.graph > .graph-outer {
+  border: 1px solid var(--lightgray);
+  border-radius: var(--nt-radius);
+  background-color: var(--nt-panel);
+}
+
+/* ---------- Math (KaTeX) ---------- */
+
+/* Quartz sets display: initial, which breaks centering of $$...$$ blocks */
+.katex-display {
+  display: block !important;
+  margin: 1.1em 0;
+  padding: 0.2em 0;
+  text-align: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Inline math: KaTeX default is 1.21em, too big next to Plex Sans */
+.katex {
+  font-size: 1.05em;
+}
+
+/* Display math a touch larger */
+.katex-display > .katex {
+  font-size: 1.1em;
+}
+
+/* Math inside bold/italic/headings should not change weight or slant */
+strong .katex,
+em .katex,
+h1 .katex,
+h2 .katex,
+h3 .katex,
+h4 .katex {
+  font-style: normal;
+}
+
+/* KaTeX inside the TOC (filled in by patch-toc-katex.mjs) */
+.toc-content a .katex {
+  font-size: 1em;
+}
+
+/* ==========================================================
+   Layout (desktop only): sidebars pinned to the screen edges
+   Middle column capped at 860px.
+   ========================================================== */
+
+@media all and (min-width: 1201px) {
+  #quartz-root.page {
+    max-width: none;
+    margin: 0;
+  }
+
+  #quartz-root.page > #quartz-body {
+    grid-template-columns: 320px minmax(0, 860px) 320px;
+    justify-content: space-between;
+    column-gap: 0;
+  }
+}
+
+/* ==========================================================
+   Reader mode (desktop): same 3-column grid (sidebars stay in
+   the layout, Quartz hides them), middle column narrower.
+   Delete this block to get Quartz's default behavior back.
+   ========================================================== */
+
+@media all and (min-width: 1201px) {
+  :root[reader-mode="on"] #quartz-root.page > #quartz-body {
+    grid-template-columns: 320px minmax(0, 760px) 320px;
+    justify-content: center;
+  }
+
+  :root[reader-mode="on"] .sidebar {
+    border-color: transparent;
+  }
+}
